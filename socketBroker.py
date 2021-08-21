@@ -43,6 +43,7 @@ class handleEachClientHere(IOTSocket):
     preAddress= ''
     index=[]
     list_Socket= []
+    data_pub= ''
     
     
     def DeviceVerify(self, id_, key):          # 'id_' - int , 'key' - string
@@ -72,8 +73,12 @@ class handleEachClientHere(IOTSocket):
         backed application
         (make sure u remove delimeters and other vulnerable strings which effect the backend application)
         '''
+        
+        if str(id_)=='0':
+            self.data_pub= data
+        
         for i in lst_of_data_to_remove:         # remove delimiters/data, if any are present in client data to prevent clashes
-            data.replace(i, '')
+            self.data_pub.replace(i, '')
             
         if str(id_)== str(1):
             clrprint("[client"+str(id_)+"]: ", data,clr='g')
@@ -83,8 +88,8 @@ class handleEachClientHere(IOTSocket):
         self.date= datetime.datetime.now()
         c= 0
         for j in self.list_Socket:
-            message= "hi"
-            serverMessage= str(self.date)+ str('[localhost] say: ')+ message+ " to"+ str(self.clients[c])
+            message= self.data_pub
+            serverMessage= message
             j.sendall(serverMessage.encode())
             c+= 1
 
@@ -107,10 +112,7 @@ class handleEachClientHere(IOTSocket):
 
         tempList.remove(keyword)
         self.list_Socket= tempList
-        
-        
-        
-        
+
         #self.clients= tempList
         
         keyword= str(self.address)

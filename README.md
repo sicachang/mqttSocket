@@ -24,6 +24,7 @@ mqttSocket
 ['client1']
 目前共1人連線
 
+
 3. Broker 傳送訊息 timestamp
 
 多使用收接收相同訊息

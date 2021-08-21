@@ -45,6 +45,7 @@ while 1: # reconnect if socket is closed
         while 1:
             data = someThingtoSend()
             if data != '':
+                sica= 2
                 sock.sendData(data)     # send data to server if data is available to send
             rcv_data = sock.recvData()  # receive data from server if available
             

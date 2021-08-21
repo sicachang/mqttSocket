@@ -35,6 +35,7 @@ def handleCmdsFromServer(data):
     data/command from the server.
     '''
     clrprint(data,clr='b')
+    
 
 while 1: # reconnect if socket is closed
     try:

@@ -4,7 +4,7 @@ Developed by Abhijith Boppe - linkedin.com/in/abhijith-boppe/
 client example for raspberry 
 '''
 
-from IOTSocket import IOTSocketClient as sock
+from mqttSocket import IOTSocketClient as sock
 import time
 from clrprint import *
 

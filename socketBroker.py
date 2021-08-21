@@ -42,6 +42,7 @@ class handleEachClientHere(IOTSocket):
     date= 'no date'
     preAddress= ''
     index=[]
+    list_Socket= []
     
     
     def DeviceVerify(self, id_, key):          # 'id_' - int , 'key' - string
@@ -50,6 +51,7 @@ class handleEachClientHere(IOTSocket):
         if "client"+str(id_) not in self.clients:
             self.clients.append("client"+str(id_))
             self.addrs.append(str(self.address))
+            self.list_Socket.append(self.client)
             
         print("訂閱名單: ", self.clients)
         self.numConnected= len(self.clients)
@@ -96,14 +98,18 @@ class handleEachClientHere(IOTSocket):
         print(str(datetime.datetime.now())+ " client"+str(client_num)+ " 已退出訂閱")
         
         keyword= client_num
-        
         tempList= self.clients
         for i in tempList:
             if i.find(keyword.lower()) != -1:
                 tempList.remove(i)
         print(tempList)
         
-        self.clients= tempList
+        keyword= self.client
+        tempList= self.list_Socket
+        
+        
+        
+        #self.clients= tempList
         
         keyword= str(self.address)
 
@@ -111,9 +117,6 @@ class handleEachClientHere(IOTSocket):
         
         print("目前共"+ str(len(self.clients)) + "人連線")
 
-        
-
-        
         '''
         handle error if any during socket handling
         error start with "ERROR: "

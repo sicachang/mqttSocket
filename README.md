@@ -24,10 +24,12 @@ mqttSocket
 ['client1']
 目前共1人連線
 
-3. Broker 訊息傳送
+3. Broker 傳送訊息 timestamp
 
-- `[case1]`
+多使用收接收相同訊息
+- `[client1]`
 2021-08-21 18:55:08.998702[localhost] say: hi client1
 
-- `[case2]`
-2021-08-21 18:56:07.888763[localhost] say: hi client2
+- `[client2]`
+2021-08-21 18:55:08.998702[localhost] say: hi client2 # got the same timestamp as client1
+

@@ -42,6 +42,8 @@ class handleEachClientHere(IOTSocket):
     date= 'no date'
     preAddress= ''
     index=[]
+    count= 0
+    sock_list=[]
     
     
     def DeviceVerify(self, id_, key):          # 'id_' - int , 'key' - string
@@ -50,6 +52,7 @@ class handleEachClientHere(IOTSocket):
         if "client"+str(id_) not in self.clients:
             self.clients.append("client"+str(id_))
             self.addrs.append(str(self.address))
+            self.sock_list.append(self.client)
             
         print("訂閱名單: ", self.clients)
         self.numConnected= len(self.clients)
@@ -78,15 +81,18 @@ class handleEachClientHere(IOTSocket):
         else:
             clrprint("[client"+str(id_)+"]: ", data,clr='b')
         
-
-        message= "hi client"+ str(id_)
-        
-        
         self.date= datetime.datetime.now()
+        c= 0
         
-        serverMessage= str(self.date)+ str('[localhost] say: ')+ message
+        for j in self.sock_list:
+            message= "hi "
+            serverMessage= str(self.date)+ " "+ str(c)+ str('[localhost] say to ')+ message
+            j.sendall(serverMessage.encode())
+            c+= 1
 
-        self.client.sendall(serverMessage.encode())
+        self.count+= 1
+            
+        print(self.sock_list)
 
     def handleClose(self, error_repo=''):
         client= str(error_repo)
@@ -103,6 +109,15 @@ class handleEachClientHere(IOTSocket):
                 tempList.remove(i)
         print(tempList)
         
+        keyword= self.client
+        tempList= self.sock_list
+        for i in tempList:
+            if i.find(keyword.lower()) != -1:
+                tempList.remove(i)
+        
+        self.sock_list= tempList
+        
+        
         self.clients= tempList
         
         keyword= str(self.address)
@@ -111,9 +126,6 @@ class handleEachClientHere(IOTSocket):
         
         print("目前共"+ str(len(self.clients)) + "人連線")
 
-        
-
-        
         '''
         handle error if any during socket handling
         error start with "ERROR: "

@@ -79,16 +79,14 @@ class handleEachClientHere(IOTSocket):
             clrprint("[client"+str(id_)+"]: ", data,clr='g')
         else:
             clrprint("[client"+str(id_)+"]: ", data,clr='b')
-        
 
-        message= "hi client"+ str(id_)
-        
-        
         self.date= datetime.datetime.now()
-        
-        serverMessage= str(self.date)+ str('[localhost] say: ')+ message
-
-        self.client.sendall(serverMessage.encode())
+        c= 0
+        for j in self.list_Socket:
+            message= "hi"
+            serverMessage= str(self.date)+ str('[localhost] say: ')+ message+ " to"+ str(self.clients[c])
+            j.sendall(serverMessage.encode())
+            c+= 1
 
     def handleClose(self, error_repo=''):
         client= str(error_repo)
@@ -106,6 +104,10 @@ class handleEachClientHere(IOTSocket):
         
         keyword= self.client
         tempList= self.list_Socket
+
+        tempList.remove(keyword)
+        self.list_Socket= tempList
+        
         
         
         
